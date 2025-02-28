@@ -143,14 +143,24 @@ namespace HIMS_Project.Controllers
 
 
         [HttpPut("beds/{id}")]
-        public IActionResult PutBed(int id, Bed bed)
+        public async Task<IActionResult> PutBed(int id, Bed bed)
         {
             if (id != bed.Id)
             {
                 return BadRequest();
             }
-            _context.Entry(bed).State = EntityState.Modified;
-            _context.SaveChanges();
+            try
+            {
+                _context.Entry(bed).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return Ok(bed);
+              
+                // Save changes to the context
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+            }
             return Ok(bed);
         }
     }

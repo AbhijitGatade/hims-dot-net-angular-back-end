@@ -53,6 +53,8 @@ namespace HIMS_Project.Controllers
             }
 
             _context.Entry(concessionBy).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
             return Ok(concessionBy);
         }
 
