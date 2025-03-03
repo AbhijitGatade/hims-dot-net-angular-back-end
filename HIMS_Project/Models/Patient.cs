@@ -16,8 +16,16 @@ public partial class Patient
     [Column("id")]
     public int Id { get; set; }
 
+    [Column("prefix")]
+
+    public string Prefix { get; set; } = null!;
+
+
     [Column("name")]
     [StringLength(100)]
+
+
+
     public string Name { get; set; } = null!;
 
     [Column("uidno")]
@@ -39,7 +47,7 @@ public partial class Patient
     public string? BloodGroup { get; set; }
 
     [Column("mobile_no")]
-    [StringLength(15)]
+    //[StringLength(15)]
     public string MobileNo { get; set; } = null!;
 
     [Column("alt_mobile_no")]
