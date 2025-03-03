@@ -69,15 +69,22 @@ namespace HIMS_Project.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteRoom(int id)
         {
-            var room = _context.Rooms.Find(id);
-            if (room == null)
+            if (_context.Beds.Where(b => b.Roomid == id).Count() == 0)
+            {
+                var room = _context.Rooms.Find(id);
+                if (room == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Rooms.Remove(room);
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
             {
                 return NotFound();
             }
-
-            _context.Rooms.Remove(room);
-            _context.SaveChanges();
-            return Ok();
         }
 
 

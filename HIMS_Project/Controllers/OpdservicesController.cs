@@ -28,12 +28,12 @@ namespace HIMSProject.Controllers
             //return Ok(await _context.Opdservices.ToListAsync());
             if (opdservicecategoryid == 0)
             {
-                List<Opdservice> opdservices = _context.Opdservices.Include(r => r.Opdservicecategory).ToList();
+                List<Opdservice> opdservices = _context.Opdservices.Include(r => r.Opdservicecategory).OrderBy(r=>r.Srno).ToList();
                 return Ok(opdservices);
             }
             else
             {
-                List<Opdservice> opdservices = _context.Opdservices.Where(r => r.Opdservicecategoryid == opdservicecategoryid).ToList();
+                List<Opdservice> opdservices = _context.Opdservices.Where(r => r.Opdservicecategoryid == opdservicecategoryid).OrderBy(r => r.Srno).ToList();
                 return Ok(opdservices);
             }
         }
