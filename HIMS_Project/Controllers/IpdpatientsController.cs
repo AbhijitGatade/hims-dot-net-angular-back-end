@@ -64,20 +64,20 @@ namespace HIMS2.Controllers
 
         // PUT: api/Ipdpatients/5
        
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutIpdpatient(int id, Ipdpatient ipdpatient)
-        {
-            if (id != ipdpatient.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutIpdpatient(int id, Ipdpatient ipdpatient)
+        //{
+        //    if (id != ipdpatient.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(ipdpatient).State = EntityState.Modified;
+        //    _context.Entry(ipdpatient).State = EntityState.Modified;
 
-                await _context.SaveChangesAsync();
+        //        await _context.SaveChangesAsync();
 
-            return Ok(ipdpatient);
-        }
+        //    return Ok(ipdpatient);
+        //}
 
         // POST: api/Ipdpatients
         

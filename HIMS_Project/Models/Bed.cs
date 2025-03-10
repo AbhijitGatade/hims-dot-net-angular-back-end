@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HIMS_Project.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace HIMS_Project.Models;
@@ -21,7 +22,7 @@ public partial class Bed
     public int Roomid { get; set; }
 
     [InverseProperty("Bed")]
-    public virtual ICollection<Ipdpatient> Ipdpatients { get; set; } = new List<Ipdpatient>();
+    public virtual ICollection<Ipdpatient> Ipdpatients { get; set; } 
 
     [ForeignKey("Roomid")]
     [InverseProperty("Beds")]

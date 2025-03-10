@@ -9,9 +9,11 @@ namespace HIMS_Project.Models;
 [Table("opdpatients")]
 public partial class Opdpatient
 {
+   
+
     [Key]
     [Column("id")]
-    public int Id { get; set; }
+    public int opdid { get; set; }
 
     [Column("patientid")]
     public int Patientid { get; set; }
@@ -36,7 +38,7 @@ public partial class Opdpatient
     public string? Remark { get; set; }
 
     [Column("createdby")]
-    public int Createdby { get; set; }
+    public int? opdcreatedby { get; set; }
 
     [Column("updatedby")]
     public int? Updatedby { get; set; }

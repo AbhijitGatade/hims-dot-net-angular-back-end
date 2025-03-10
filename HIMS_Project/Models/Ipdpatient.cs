@@ -11,19 +11,19 @@ public partial class Ipdpatient
 {
     [Key]
     [Column("id")]
-    public int Id { get; set; }
+    public int? id { get; set; }
 
     [Column("patientid")]
     public int? Patientid { get; set; }
 
     [Column("admissiondate")]
-    public DateOnly Admissiondate { get; set; }
+    public DateOnly? Admissiondate { get; set; }
 
     [Column("admissiontime")]
-    public TimeOnly Admissiontime { get; set; }
+    public TimeOnly? Admissiontime { get; set; }
 
     [Column("doctorid")]
-    public int Doctorid { get; set; }
+    public int? Doctorid { get; set; }
 
     [Column("status")]
     [StringLength(20)]
@@ -46,16 +46,16 @@ public partial class Ipdpatient
     public int? Bedid { get; set; }
 
     [Column("totalamount", TypeName = "decimal(10, 2)")]
-    public decimal Totalamount { get; set; }
+    public decimal? Totalamount { get; set; }
 
     [Column("discountamount", TypeName = "decimal(10, 2)")]
-    public decimal Discountamount { get; set; }
+    public decimal? Discountamount { get; set; }
 
     [Column("billamount", TypeName = "decimal(10, 2)")]
-    public decimal Billamount { get; set; }
+    public decimal? Billamount { get; set; }
 
     [Column("paidamount", TypeName = "decimal(10, 2)")]
-    public decimal Paidamount { get; set; }
+    public decimal? Paidamount { get; set; }
 
     [Column("concessionbyid")]
     public int? Concessionbyid { get; set; }

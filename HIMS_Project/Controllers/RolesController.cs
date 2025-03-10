@@ -84,39 +84,102 @@ namespace HIMS_Project.Controllers
 
         //for rolemenus
         [HttpPost("menus")]
-        public IActionResult PostRoleMenus(RoleMenu roleMenu)
+        public IActionResult PostRoleMenus([FromBody] RoleMenuPostModel model)
         {
-            _context.RoleMenus.Add(roleMenu);
+            if (model == null || model.Menuids == null || model.Menuids.Count == 0)
+            {
+                return BadRequest("Invalid request. You must provide a list of Menu IDs.");
+            }
+
+            foreach (var menuId in model.Menuids)
+            {
+                var roleMenu = new RoleMenu
+                {
+                    Roleid = model.RoleId,  // Set the RoleId from the request
+                    Menuid = menuId         // Set each MenuId from the list
+                };
+
+                // Add the RoleMenu entity to the DbContext
+                _context.RoleMenus.Add(roleMenu);
+            }
+
+            // Save all changes to the database at once
             _context.SaveChanges();
-            return Ok(roleMenu);
+
+            return Ok("Role menus created successfully.");
         }
 
         [HttpGet("menus/{roleid}/{menuid}")]
-        public IActionResult GetRolesMenus(int roleid,int menuid)
+        public IActionResult GetRolesMenus(int roleid, int menuid)
         {
-            
+            // Define specific menu names you want to filter
+            var menuNames = new[] { "Dashboard", "Rooms", "Masters" };
+
             if (roleid != 0 && menuid != 0)
             {
-                List<RoleMenu> RoleMenus = _context.RoleMenus.Where(r => r.Roleid == roleid && r.Menuid == menuid).ToList();
-                return Ok(RoleMenus);
+                // Filter by both role and menu
+                List<RoleMenu> roleMenus = _context.RoleMenus
+                    .Where(r => r.Roleid == roleid && r.Menuid == menuid)
+                    .ToList();
+                return Ok(roleMenus);
             }
             else if (roleid != 0 && menuid == 0)
             {
-                List<RoleMenu> RoleMenus = _context.RoleMenus.Where(r => r.Roleid == roleid).Include(r=> r.Menu).ToList();
-                return Ok(RoleMenus);
+                // Filter by role and specific menu names
+                List<RoleMenu> roleMenus = _context.RoleMenus
+                    .Where(r => r.Roleid == roleid && menuNames.Contains(r.Menu.Title)) // Assuming 'Name' is the field holding menu name
+                    .Include(r => r.Menu)
+                    .ToList();
+                return Ok(roleMenus);
             }
             else if (roleid == 0 && menuid != 0)
             {
-                List<RoleMenu> RoleMenus = _context.RoleMenus.Where(r => r.Menuid == menuid).Include(r => r.Role).ToList();
-                return Ok(RoleMenus);
+                // Filter by menu and specific role names
+                List<RoleMenu> roleMenus = _context.RoleMenus
+                    .Where(r => r.Menuid == menuid)
+                    .Include(r => r.Role)
+                    .ToList();
+                return Ok(roleMenus);
             }
             else
             {
-                List<RoleMenu> RoleMenus = _context.RoleMenus.Include(r => r.Menu).Include(r => r.Role).ToList();
-                return Ok(RoleMenus);
+                // Filter by specific menu names (if no role or menuid is specified)
+                List<RoleMenu> roleMenus = _context.RoleMenus
+                    .Where(r => menuNames.Contains(r.Menu.Title)) // Filtering by menu names
+                    .Include(r => r.Menu)
+                    .Include(r => r.Role)
+                    .ToList();
+                return Ok(roleMenus);
             }
-
         }
+
+
+        //[HttpGet("menus/{roleid}/{menuid}")]
+        //public IActionResult GetRolesMenus(int roleid,int menuid)
+        //{
+
+        //    if (roleid != 0 && menuid != 0)
+        //    {
+        //        List<RoleMenu> RoleMenus = _context.RoleMenus.Where(r => r.Roleid == roleid && r.Menuid == menuid).ToList();
+        //        return Ok(RoleMenus);
+        //    }
+        //    else if (roleid != 0 && menuid == 0)
+        //    {
+        //        List<RoleMenu> RoleMenus = _context.RoleMenus.Where(r => r.Roleid == roleid).Include(r=> r.Menu).ToList();
+        //        return Ok(RoleMenus);
+        //    }
+        //    else if (roleid == 0 && menuid != 0)
+        //    {
+        //        List<RoleMenu> RoleMenus = _context.RoleMenus.Where(r => r.Menuid == menuid).Include(r => r.Role).ToList();
+        //        return Ok(RoleMenus);
+        //    }
+        //    else
+        //    {
+        //        List<RoleMenu> RoleMenus = _context.RoleMenus.Include(r => r.Menu).Include(r => r.Role).ToList();
+        //        return Ok(RoleMenus);
+        //    }
+
+        //}
 
         [HttpGet("menus/{roleid}/{menuid}/{id}")]
         public IActionResult GetRoleMenus(int roleid,int menuid,int id)

@@ -25,7 +25,8 @@ namespace HIMS_Project.Controllers
         [HttpGet]
         public IActionResult GetRooms()
         {
-            return Ok(_context.Rooms.ToList());
+            return Ok(_context.Rooms.Include(r=>r.Beds).ToList());
+            //return Ok();
         }
 
         // GET: api/Rooms/5

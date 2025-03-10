@@ -24,31 +24,35 @@ public partial class Patient
     [Column("name")]
     [StringLength(100)]
 
-
-
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; } = null!;
 
     [Column("uidno")]
     [StringLength(50)]
-    public string Uidno { get; set; } = null!;
+    public string? Uidno { get; set; } = null!;
 
     [Column("birthdate")]
-    public DateOnly Birthdate { get; set; }
+    public DateOnly? Birthdate { get; set; }
 
     [Column("age")]
-    public int Age { get; set; }
+    public int? Age { get; set; }
 
     [Column("gender")]
     [StringLength(10)]
-    public string Gender { get; set; } = null!;
+    public string? Gender { get; set; } = null!;
 
     [Column("blood_group")]
     [StringLength(10)]
     public string? BloodGroup { get; set; }
 
+    [Column("address")]
+    public string address { get; set; } 
+
+    [Column("townid")]
+    public int townid { get; set; } 
+
     [Column("mobile_no")]
     //[StringLength(15)]
-    public string MobileNo { get; set; } = null!;
+    public string? MobileNo { get; set; } = null!;
 
     [Column("alt_mobile_no")]
     [StringLength(15)]
@@ -67,7 +71,7 @@ public partial class Patient
     public string? AadhaarNo { get; set; }
 
     [Column("createdby")]
-    public int Createdby { get; set; }
+    public int? Createdby { get; set; }
 
     [Column("updatedby")]
     public int? Updatedby { get; set; }
