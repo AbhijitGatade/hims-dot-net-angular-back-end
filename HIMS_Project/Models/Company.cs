@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HIMS_Project.Models;
 
-[Table("ipdcompanies")]
-public partial class Ipdcompany
+[Table("companies")]
+public partial class Company
 {
     [Key]
     [Column("id")]
@@ -18,5 +18,8 @@ public partial class Ipdcompany
     public string Name { get; set; } = null!;
 
     [InverseProperty("Company")]
-    public virtual ICollection<Ipdservicecompanyrate> Ipdservicecompanyrates { get; set; } = new List<Ipdservicecompanyrate>();
+    public virtual ICollection<IpdCompanyServiceRate>? IpdCompanyServiceRates { get; set; }
+
+    [InverseProperty("Company")]
+    public virtual ICollection<OpdCompanyServiceRate>? OpdCompanyServiceRates { get; set; }
 }

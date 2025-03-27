@@ -25,7 +25,14 @@ namespace HIMS_Project.Controllers
         [HttpGet]
         public async Task<ActionResult> GetMenus()
         {
-            return Ok(await _context.Menus.ToListAsync());
+            return Ok(await _context.Menus.OrderBy(m=>m.Parentmenuid).OrderBy(m=>m.Srno).ToListAsync());
+        }
+
+        // GET: api/Menus/Childs/ParentMenuId
+        [HttpGet("Childs/{parentmenuid}")]
+        public async Task<ActionResult> GetChildMenus(int parentmenuid)
+        {
+            return Ok(await _context.Menus.Where(m => m.Parentmenuid == parentmenuid).OrderBy(m => m.Srno).ToListAsync());        
         }
 
         // GET: api/Menus/5

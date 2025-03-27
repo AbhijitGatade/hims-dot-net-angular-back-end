@@ -24,31 +24,31 @@ public partial class Patient
     [Column("name")]
     [StringLength(100)]
 
-    public string? Name { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
     [Column("uidno")]
     [StringLength(50)]
-    public string? Uidno { get; set; } = null!;
+    public string Uidno { get; set; } = null!;
 
     [Column("birthdate")]
-    public DateOnly? Birthdate { get; set; }
+    public DateTime? Birthdate { get; set; }
 
     [Column("age")]
-    public int? Age { get; set; }
+    public string? Age { get; set; }
 
     [Column("gender")]
     [StringLength(10)]
-    public string? Gender { get; set; } = null!;
+    public string Gender { get; set; } = null!;
 
     [Column("blood_group")]
     [StringLength(10)]
     public string? BloodGroup { get; set; }
 
     [Column("address")]
-    public string address { get; set; } 
+    public string? address { get; set; } 
 
     [Column("townid")]
-    public int townid { get; set; } 
+    public int? townid { get; set; } 
 
     [Column("mobile_no")]
     //[StringLength(15)]
@@ -87,4 +87,5 @@ public partial class Patient
 
     [InverseProperty("Patient")]
     public virtual ICollection<Opdpatient> Opdpatients { get; set; } = new List<Opdpatient>();
+
 }

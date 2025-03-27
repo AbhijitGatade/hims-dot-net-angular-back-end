@@ -13,7 +13,7 @@ public partial class Opdpatient
 
     [Key]
     [Column("id")]
-    public int opdid { get; set; }
+    public int Id { get; set; }
 
     [Column("patientid")]
     public int Patientid { get; set; }
@@ -21,8 +21,9 @@ public partial class Opdpatient
     [Column("opddate")]
     public DateOnly? Opddate { get; set; }
 
+
     [Column("opdtime")]
-    public TimeOnly? Opdtime { get; set; }
+    public string? Opdtime { get; set; }
 
     [Column("height")]
     public double? Height { get; set; }
@@ -33,12 +34,11 @@ public partial class Opdpatient
     [Column("doctorid")]
     public int Doctorid { get; set; }
 
-    [Column("remark")]
-    [StringLength(500)]
-    public string? Remark { get; set; }
+    [Column("refdoctorid")]
+    public int Refdoctorid { get; set; }
 
     [Column("createdby")]
-    public int? opdcreatedby { get; set; }
+    public int? Createdby { get; set; }
 
     [Column("updatedby")]
     public int? Updatedby { get; set; }
@@ -52,6 +52,10 @@ public partial class Opdpatient
     [ForeignKey("Doctorid")]
     [InverseProperty("Opdpatients")]
     public virtual Doctor? Doctor { get; set; }
+
+    [ForeignKey("Refdoctorid")]
+    [InverseProperty("RefDoctorOpdpatients")]
+    public virtual Doctor? RefDoctor { get; set; }
 
     [InverseProperty("Opd")]
     public virtual ICollection<Opdbill> Opdbills { get; set; } = new List<Opdbill>();

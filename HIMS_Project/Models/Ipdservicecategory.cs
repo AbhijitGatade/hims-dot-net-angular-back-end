@@ -23,4 +23,6 @@ public partial class Ipdservicecategory
 
     [InverseProperty("Ipdservicecategory")]
     public virtual ICollection<Ipdservice> Ipdservices { get; set; } = new List<Ipdservice>();
+
+
 }

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HIMS_Project.Context;
 using HIMS_Project.Models;
-using HIMS_Project.Context;
 
 namespace HIMSProject.Controllers
 {

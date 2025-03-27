@@ -52,8 +52,17 @@ public partial class Doctor
     public string Ifsccode { get; set; } = null!;
 
     [InverseProperty("Doctor")]
-    public virtual ICollection<Ipdpatient> Ipdpatients { get; set; } = new List<Ipdpatient>();
+    public virtual ICollection<Ipdpatient>? Ipdpatients { get; set; } = new List<Ipdpatient>();
 
     [InverseProperty("Doctor")]
-    public virtual ICollection<Opdpatient> Opdpatients { get; set; } = new List<Opdpatient>();
+    public virtual ICollection<Opdpatient>? Opdpatients { get; set; } = new List<Opdpatient>();
+
+    [InverseProperty("RefDoctor")]
+    public virtual ICollection<Opdpatient>? RefDoctorOpdpatients { get; set; } = new List<Opdpatient>();
+
+    [InverseProperty("RefDoctor")]
+    public virtual ICollection<Ipdpatient>? RefDoctorIpdpatients { get; set; } = new List<Ipdpatient>();
+
+    [InverseProperty("Doctor")]
+    public virtual ICollection<OpdCompanyServiceRate>? OpdCompanyServiceRates { get; set; }
 }

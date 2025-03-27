@@ -35,4 +35,7 @@ public partial class Opdservice
     [ForeignKey("Opdservicecategoryid")]
     [InverseProperty("Opdservices")]
     public virtual Opdservicecategory? Opdservicecategory { get; set; }
+
+    [InverseProperty("Opdservice")]
+    public virtual ICollection<OpdCompanyServiceRate> OpdCompanyServiceRates { get; set; }
 }

@@ -41,5 +41,5 @@ public partial class Ipdservice
     public virtual Ipdservicecategory? Ipdservicecategory { get; set; }
 
     [InverseProperty("Ipdservice")]
-    public virtual ICollection<Ipdservicecompanyrate> Ipdservicecompanyrates { get; set; } = new List<Ipdservicecompanyrate>();
+    public virtual ICollection<IpdCompanyServiceRate> IpdCompanyServiceRates { get; set; } 
 }

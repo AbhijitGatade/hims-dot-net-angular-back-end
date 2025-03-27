@@ -11,7 +11,7 @@ public partial class Ipdpatient
 {
     [Key]
     [Column("id")]
-    public int? id { get; set; }
+    public int? Id { get; set; }
 
     [Column("patientid")]
     public int? Patientid { get; set; }
@@ -20,20 +20,19 @@ public partial class Ipdpatient
     public DateOnly? Admissiondate { get; set; }
 
     [Column("admissiontime")]
-    public TimeOnly? Admissiontime { get; set; }
+    public string? Admissiontime { get; set; }
 
     [Column("doctorid")]
     public int? Doctorid { get; set; }
 
-    [Column("status")]
-    [StringLength(20)]
-    public string? Status { get; set; }
+    [Column("refdoctorid")]
+    public int Refdoctorid { get; set; }
 
     [Column("dischargedate")]
     public DateOnly? Dischargedate { get; set; }
 
     [Column("dischargetime")]
-    public TimeOnly? Dischargetime { get; set; }
+    public string? Dischargetime { get; set; }
 
     [Column("dischargedas")]
     [StringLength(50)]
@@ -44,18 +43,20 @@ public partial class Ipdpatient
 
     [Column("bedid")]
     public int? Bedid { get; set; }
+    [Column("remark")]
+    public string? Remark { get; set; }
 
-    [Column("totalamount", TypeName = "decimal(10, 2)")]
-    public decimal? Totalamount { get; set; }
+    [Column("totalamount", TypeName = "float")]
+    public float? Totalamount { get; set; }
 
-    [Column("discountamount", TypeName = "decimal(10, 2)")]
-    public decimal? Discountamount { get; set; }
+    [Column("discountamount", TypeName = "float")]
+    public float? Discountamount { get; set; }
 
-    [Column("billamount", TypeName = "decimal(10, 2)")]
-    public decimal? Billamount { get; set; }
+    [Column("billamount", TypeName = "float")]
+    public float? Billamount { get; set; }
 
-    [Column("paidamount", TypeName = "decimal(10, 2)")]
-    public decimal? Paidamount { get; set; }
+    [Column("paidamount", TypeName = "float")]
+    public float? Paidamount { get; set; }
 
     [Column("concessionbyid")]
     public int? Concessionbyid { get; set; }
@@ -64,6 +65,13 @@ public partial class Ipdpatient
     [InverseProperty("Ipdpatients")]
     public virtual Bed? Bed { get; set; }
 
+    [Column("createdby")]
+    public int? Createdby { get; set; }
+    
+    [Column("createdon", TypeName = "datetime")]
+    public DateTime? Createdon { get; set; }
+
+
     [ForeignKey("Concessionbyid")]
     [InverseProperty("Ipdpatients")]
     public virtual ConcessionBy? Concessionby { get; set; }
@@ -71,6 +79,10 @@ public partial class Ipdpatient
     [ForeignKey("Doctorid")]
     [InverseProperty("Ipdpatients")]
     public virtual Doctor? Doctor { get; set; } = null!;
+
+    [ForeignKey("Refdoctorid")]
+    [InverseProperty("RefDoctorIpdpatients")]
+    public virtual Doctor? RefDoctor { get; set; }
 
     [InverseProperty("Ipd")]
     public virtual ICollection<Ipdbillpayment> Ipdbillpayments { get; set; } = new List<Ipdbillpayment>();
