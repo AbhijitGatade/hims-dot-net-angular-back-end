@@ -16,8 +16,11 @@ public partial class Ipdpatient
     [Column("patientid")]
     public int? Patientid { get; set; }
 
+    [Column("companyid")]
+    public int? Companyid { get; set; }
+
     [Column("admissiondate")]
-    public DateOnly? Admissiondate { get; set; }
+    public DateOnly Admissiondate { get; set; }
 
     [Column("admissiontime")]
     public string? Admissiontime { get; set; }
@@ -94,4 +97,8 @@ public partial class Ipdpatient
     [ForeignKey("Roomid")]
     [InverseProperty("Ipdpatients")]
     public virtual Room? Room { get; set; }
+
+    [ForeignKey("Companyid")]
+    [InverseProperty("Ipdpatients")]
+    public virtual Company? Company { get; set; }
 }

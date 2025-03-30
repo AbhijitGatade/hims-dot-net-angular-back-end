@@ -158,6 +158,7 @@ namespace HIMS_Project.Controllers
                     Refdoctorid = patientDTO.ipd.Refdoctorid,
                     Roomid = patientDTO.ipd.Roomid,
                     Bedid = patientDTO.ipd.Bedid,
+                    Companyid=patientDTO.ipd.Companyid,
                     Remark = patientDTO.ipd.Remark,
                     Createdby = patientDTO.patient.Createdby,
                     Createdon = DateTime.Now
@@ -166,6 +167,64 @@ namespace HIMS_Project.Controllers
                 await _context.SaveChangesAsync();
                 return Ok(ipd);
             }
+        }
+
+        [HttpGet("patientid/{id}")]
+        public async Task<IActionResult> GetPatientId(int id)
+        {
+            var Patients = await _context.Patients.FindAsync(id);
+
+            if (Patients == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Patients);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPatient(int id, Patient patient)
+        {
+            if (id != patient.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(patient).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+
+            return Ok(patient);
+        }
+
+        [HttpGet("ipd/{ipdid}")]
+        public async Task<IActionResult> GetIPDId(int ipdid)
+        {
+            var Ipdpatients = await (from ip in _context.Ipdpatients
+                                     join p in _context.Patients on ip.Patientid equals p.Id
+                                     where ip.Id == ipdid
+                                     select new
+                                     {
+                                         Ip = ip,  
+                                         p.Name, 
+                                         p.Uidno,
+                                         p.Prefix
+                                     }).FirstOrDefaultAsync();
+
+            return Ok(Ipdpatients); 
+        }
+
+        [HttpPut("ipd/{id}")]
+        public async Task<IActionResult> PutIPDPatient(int id, Ipdpatient ipdpatient)
+        {
+        
+            _context.Entry(ipdpatient).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+
+            return Ok(ipdpatient);
         }
     }
 }
