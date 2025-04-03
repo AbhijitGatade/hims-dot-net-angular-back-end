@@ -4,6 +4,7 @@ using HIMS_Project.Models;
 using HIMS_Project.DTOs;
 using HIMS_Project.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace HIMS_Project.Controllers
 {
@@ -137,6 +138,7 @@ namespace HIMS_Project.Controllers
                     Opddate = patientDTO.opd.Opddate,
                     Opdtime = patientDTO.opd.Opdtime,
                     Height = patientDTO.opd.Height,
+                    Companyid= patientDTO.opd.Companyid,
                     Weight = patientDTO.opd.Weight,
                     Doctorid = patientDTO.opd.Doctorid,
                     Refdoctorid = patientDTO.opd.Refdoctorid,
@@ -172,12 +174,14 @@ namespace HIMS_Project.Controllers
         [HttpGet("patientid/{id}")]
         public async Task<IActionResult> GetPatientId(int id)
         {
-            var Patients = await _context.Patients.FindAsync(id);
-
-            if (Patients == null)
-            {
-                return NotFound();
-            }
+            var Patients = await (from p in _context.Patients
+                                     join t in _context.Towns on p.townid equals t.Id
+                                     where p.Id == id
+                                     select new
+                                     {
+                                         p = p,
+                                         TownName = t.Name
+                                     }).FirstOrDefaultAsync();
 
             return Ok(Patients);
         }

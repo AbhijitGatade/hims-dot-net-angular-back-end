@@ -34,6 +34,10 @@ public partial class Opdpatient
     [Column("doctorid")]
     public int Doctorid { get; set; }
 
+    [Column("companyid")]
+    public int Companyid { get; set; }
+
+
     [Column("refdoctorid")]
     public int Refdoctorid { get; set; }
 
@@ -63,4 +67,8 @@ public partial class Opdpatient
     [ForeignKey("Patientid")]
     [InverseProperty("Opdpatients")]
     public virtual Patient? Patient { get; set; } = null!;
+
+    [ForeignKey("Companyid")]
+    [InverseProperty("Opdpatients")]
+    public virtual Company? Company { get; set; }
 }

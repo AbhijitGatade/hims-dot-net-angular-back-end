@@ -64,5 +64,9 @@ public partial class Doctor
     public virtual ICollection<Ipdpatient>? RefDoctorIpdpatients { get; set; } = new List<Ipdpatient>();
 
     [InverseProperty("Doctor")]
-    public virtual ICollection<OpdCompanyServiceRate>? OpdCompanyServiceRates { get; set; }
+    public virtual ICollection<OpdCompanyServiceRate>? OpdCompanyServiceRates { get; set; } = new List<OpdCompanyServiceRate>();
+
+
+    //[InverseProperty("Doctor")]
+    //public virtual ICollection<Opdbillservice>? Opdbillservices { get; set; }= new List<Opdbillservice>();
 }

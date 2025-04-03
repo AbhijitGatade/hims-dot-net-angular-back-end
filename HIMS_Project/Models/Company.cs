@@ -25,4 +25,7 @@ public partial class Company
 
     [InverseProperty("Company")]
     public virtual ICollection<Ipdpatient>? Ipdpatients { get; set; }
+
+    [InverseProperty("Company")]
+    public virtual ICollection<Opdpatient>? Opdpatients { get; set; }
 }

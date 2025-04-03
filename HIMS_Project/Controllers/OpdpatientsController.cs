@@ -52,17 +52,36 @@ namespace HIMSProject.Controllers
         //}
 
         // GET: api/Opdpatients/5
-        [HttpGet("{patientid}/{doctorid}/{id}")]
-        public async Task<IActionResult> GetOpdpatient(int patient,int doctorid,int id)
+        [HttpGet("{opdid}")]
+        public async Task<IActionResult> GetOpdpatient(int opdid)
         {
-            var opdpatient = await _context.Opdpatients.FindAsync(id);
+            var OpdPatients = await (from op in _context.Opdpatients
+                                     join p in _context.Patients on op.Patientid equals p.Id
+                                     where op.Id == opdid
+                                     join d in _context.Doctors on op.Doctorid equals d.Id
+                                     where op.Doctorid == d.Id
+                                     join rf in _context.Doctors on op.Refdoctorid equals rf.Id // Join for the referring doctor
+                                     where op.Refdoctorid == rf.Id
+                                     join c in _context.Companies on op.Companyid equals c.Id // Join for the referring doctor
+                                     where op.Companyid == c.Id
+                                     select new
+                                     {
+                                         Op = op,
+                                         PatientName = p.Name,  // Renaming Patient's Name to PatientName
+                                         p.Uidno,
+                                         p.Prefix,
+                                         p.address,
+                                         p.MobileNo,
+                                         CompanyName =c.Name,
+                                         DoctorName = d.Name,  // Renaming Doctor's Name to DoctorName
+                                         DoctorId = d.Id,
+                                         ReferralDoctor = rf.Name,  // Renaming Referring Doctor's Name to ReferringDoctorName
+                                         ReferralDoctorId = rf.Id
+                                     }).FirstOrDefaultAsync();
 
-            if (opdpatient == null)
-            {
-                return NotFound();
-            }
+            return Ok(OpdPatients);
 
-            return Ok(opdpatient);
+
         }
 
         // PUT: api/Opdpatients/5

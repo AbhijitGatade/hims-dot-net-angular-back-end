@@ -19,6 +19,12 @@ public partial class Opdbillservice
     [Column("opdserviceid")]
     public int Opdserviceid { get; set; }
 
+    [Column("doctorid")]
+    public int Doctorid { get; set; }
+
+    [Column("concdiscount")]
+    public int Concdiscount { get; set; }
+
     [Column("totalamount")]
     public double Totalamount { get; set; }
 
@@ -35,4 +41,9 @@ public partial class Opdbillservice
     [ForeignKey("Opdserviceid")]
     [InverseProperty("Opdbillservices")]
     public virtual Opdservice? Opdservice { get; set; } = null!;
+
+
+    //[ForeignKey("doctorid")]
+    //[InverseProperty("Opdbillservices")]
+    //public virtual Doctor? Doctor { get; set; } = null!;
 }

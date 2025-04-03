@@ -19,8 +19,11 @@ public partial class Paymentmode
     public string Name { get; set; } = null!;
 
     [InverseProperty("Paymentmethod")]
-    public virtual ICollection<Ipdbillpayment> Ipdbillpayments { get; set; } = new List<Ipdbillpayment>();
+    public virtual ICollection<Ipdbillpayment>? Ipdbillpayments { get; set; } = new List<Ipdbillpayment>();
 
     [InverseProperty("Paymentmode")]
-    public virtual ICollection<Opdbillpayment> Opdbillpayments { get; set; } = new List<Opdbillpayment>();
+    public virtual ICollection<Opdbillpayment>? Opdbillpayments { get; set; } = new List<Opdbillpayment>();
+
+    [InverseProperty("Paymentmodes")]
+    public virtual ICollection<Opdbill>? Opdbills { get; set; } = new List<Opdbill>();
 }

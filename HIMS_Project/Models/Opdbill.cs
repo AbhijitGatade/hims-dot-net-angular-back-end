@@ -16,6 +16,10 @@ public partial class Opdbill
     [Column("opdid")]
     public int Opdid { get; set; }
 
+    [Column("paymentmodeid")]
+    public int Paymentmodeid { get; set; }
+
+
     [Column("totalamount")]
     public double Totalamount { get; set; }
 
@@ -47,7 +51,11 @@ public partial class Opdbill
 
     [ForeignKey("Opdid")]
     [InverseProperty("Opdbills")]
-    public virtual Opdpatient? Opd { get; set; } = null!;
+    public virtual Opdpatient? Opd { get; set; }
+
+    [ForeignKey("paymentmodeid")]
+    [InverseProperty("Opdbills")]
+    public virtual Paymentmode? Paymentmodes { get; set; }
 
     [InverseProperty("Bill")]
     public virtual ICollection<Opdbillpayment> Opdbillpayments { get; set; } = new List<Opdbillpayment>();
