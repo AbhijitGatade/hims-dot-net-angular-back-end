@@ -32,6 +32,11 @@ public partial class Opdbill
     [Column("paidamount")]
     public double? Paidamount { get; set; }
 
+    [Column("pendingamount")]
+    public int Pendingamount { get; set; }
+
+    
+
     [Column("status")]
     [StringLength(20)]
     public string Status { get; set; } = null!;
@@ -53,9 +58,9 @@ public partial class Opdbill
     [InverseProperty("Opdbills")]
     public virtual Opdpatient? Opd { get; set; }
 
-    [ForeignKey("paymentmodeid")]
-    [InverseProperty("Opdbills")]
-    public virtual Paymentmode? Paymentmodes { get; set; }
+    //[ForeignKey("paymentmodeid")]
+    //[InverseProperty("Opdbills")]
+    //public virtual Paymentmode? Paymentmodes { get; set; }
 
     [InverseProperty("Bill")]
     public virtual ICollection<Opdbillpayment> Opdbillpayments { get; set; } = new List<Opdbillpayment>();

@@ -29,7 +29,7 @@ namespace HIMSProject.Controllers
             _context = context;
         }
 
-       
+
         //// PUT: api/Opdbills/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPut("{id}")]
@@ -78,27 +78,46 @@ namespace HIMSProject.Controllers
         {
             try
             {
-                var opdbill = new Opdbill
+                var opdbill = new Opdbill()
                 {
-                    Id = 0, 
+                    Id = 0,
                     Opdid = opdBillDTO.Opdbill.Opdid,
                     Totalamount = opdBillDTO.Opdbill.Totalamount,
                     Discountamount = opdBillDTO.Opdbill.Discountamount,
                     Billamount = opdBillDTO.Opdbill.Billamount,
                     Paidamount = opdBillDTO.Opdbill.Paidamount,
+                    Pendingamount = opdBillDTO.Opdbill.Pendingamount,
                     Paymentmodeid = opdBillDTO.Opdbill.Paymentmodeid,
                     Status = opdBillDTO.Opdbill.Status,
                     Concessionbyid = opdBillDTO.Opdbill.Concessionbyid,
                     Createdby = opdBillDTO.Opdbill.Createdby,
                     Createdon = DateTime.Now
                 };
+                _context.Opdbills.Add(opdbill);
+                await _context.SaveChangesAsync();
 
                 using (var transaction = await _context.Database.BeginTransactionAsync())
                 {
                     try
                     {
-                        _context.Opdbills.Add(opdbill);
-                        await _context.SaveChangesAsync();  // Save OPD bill first to get the ID
+                        var Opdbillpayment = new Opdbillpayment()
+                        {
+                            Billid = opdbill.Id,
+                            Paymentdate = opdBillDTO.Opdbillpayment.Paymentdate,
+                            BillAmount = opdBillDTO.Opdbillpayment.BillAmount,
+                            PaidAmount = opdBillDTO.Opdbillpayment.PaidAmount,
+                            PendingAmount = opdBillDTO.Opdbillpayment.PendingAmount,
+                            Paymentid = opdBillDTO.Opdbillpayment.Paymentid,
+                            Remark = opdBillDTO.Opdbillpayment.Remark,
+                            Createdby = opdBillDTO.Opdbill.Createdby,
+                            Createdon = DateTime.Now
+                        };
+                        _context.Opdbillpayments.Add(Opdbillpayment);
+                        await _context.SaveChangesAsync();
+
+                    
+                   
+                         // Save OPD bill first to get the ID
 
                         List<Opdbillservice> opdbillservices = new List<Opdbillservice>();
 
@@ -114,7 +133,7 @@ namespace HIMSProject.Controllers
 
                             var opdbillservice = new Opdbillservice()
                             {
-                                 Billid = opdbill.Id,
+                                Billid = opdbill.Id,
                                 Opdserviceid = service.Opdserviceid,
                                 Doctorid = service.Doctorid,
                                 Concdiscount = service.Concdiscount,
@@ -130,40 +149,46 @@ namespace HIMSProject.Controllers
                         await transaction.CommitAsync();
                         return Ok(new { Bill = opdbill, Services = opdbillservices });
                     }
+
                     catch (DbUpdateException ex)
                     {
                         Console.WriteLine(ex.InnerException?.Message); // Log or inspect the inner exception message
-                    await transaction.RollbackAsync();
+                        await transaction.RollbackAsync();
                         return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
                     }
                 }
             }
+
             catch (Exception ex)
             {
                 Console.WriteLine($"Unhandled Error: {ex.Message}");
                 return StatusCode(500, "An unexpected error occurred.");
             }
+
+
         }
 
-
+    }
+}
 
 
         // DELETE: api/Opdbills/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOpdbill(int id)
-        {
-            var opdbill = await _context.Opdbills.FindAsync(id);
-            if (opdbill == null)
-            {
-                return Ok(NotFound());
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteOpdbill(int id)
+        //{
+        //    var opdbill = await _context.Opdbills.FindAsync(id);
+        //    if (opdbill == null)
+        //    {
+        //        return Ok(NotFound());
+        //    }
 
-            _context.Opdbills.Remove(opdbill);
-            await _context.SaveChangesAsync();
+//    _context.Opdbills.Remove(opdbill);
+//    await _context.SaveChangesAsync();
 
-            return Ok();
-        }
+//    return Ok();
 
-     
-    }
-}
+
+
+//}
+
+

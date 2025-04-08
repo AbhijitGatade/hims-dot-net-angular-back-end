@@ -20,10 +20,18 @@ public partial class Opdbillpayment
     public DateOnly Paymentdate { get; set; }
 
     [Column("amount")]
-    public double Amount { get; set; }
+    public double BillAmount { get; set; }
+
+
+    [Column("paidamount")]
+    public double PaidAmount { get; set; }
+    
+
+    [Column("pendingamount")]
+    public double PendingAmount { get; set; }
 
     [Column("paymentmodeid")]
-    public int Paymentmodeid { get; set; }
+    public int Paymentid { get; set; }
 
     [Column("remark")]
     [StringLength(500)]
@@ -39,7 +47,7 @@ public partial class Opdbillpayment
     [InverseProperty("Opdbillpayments")]
     public virtual Opdbill? Bill { get; set; } = null!;
 
-    [ForeignKey("Paymentmodeid")]
-    [InverseProperty("Opdbillpayments")]
-    public virtual Paymentmode? Paymentmode { get; set; } = null!;
+    //[ForeignKey("paymentmodeid")]
+    //[InverseProperty("Opdbillpayments")]
+    //public virtual Paymentmode? Paymentmode { get; set; } = null!;
 }
