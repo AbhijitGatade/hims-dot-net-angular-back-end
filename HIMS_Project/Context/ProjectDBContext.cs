@@ -69,4 +69,7 @@ public partial class ProjectDBContext : DbContext
     public virtual DbSet<DischargeDiet> DischargeDiets { get; set; }
     public virtual DbSet<DischargeEmergency> DischargeEmergency { get; set; }
     public virtual DbSet<DischargeExercise> DischargeExercises { get; set; }
+
+public DbSet<HIMS_Project.Models.IpdBill> IpdBill { get; set; } = default!;
+    public DbSet<DischargeSummaries> DischargeSummaries { get; set; }
 }

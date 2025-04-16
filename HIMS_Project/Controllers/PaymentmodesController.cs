@@ -97,33 +97,7 @@ namespace HIMS_Project.Controllers
             return Ok(opdbillpayment);
         }
 
-        //[HttpGet("OPDBillpayments/{billid}/{paymentmodeid}")]
-        //public async Task<ActionResult<IEnumerable<Opdbillpayment>>> GetOpdbillpayments(int billid,int paymentmodeid)
-        //{
-        //    return Ok(await _context.Opdbillpayments.ToListAsync());
-        //    if (billid != 0 && paymentmodeid != 0)
-        //    {
-        //        List<Opdbillpayment> Opdbillpayments = _context.Opdbillpayments.Where(r => r.Billid == billid && r.Paymentmodeid == paymentmodeid).ToList();
-        //        return Ok(Opdbillpayments);
-        //    }
-        //    else if (billid != 0 && paymentmodeid == 0)
-        //    {
-        //        List<Opdbillpayment> Opdbillpayments = _context.Opdbillpayments.Where(r => r.Billid == billid).Include(r => r.Paymentmode).ToList();
-        //        return Ok(Opdbillpayments);
-        //    }
-        //    else if (billid == 0 && paymentmodeid != 0)
-        //    {
-        //        List<Opdbillpayment> Opdbillpayments = _context.Opdbillpayments.Where(r => r.Paymentmodeid == paymentmodeid).Include(r => r.Bill).ToList();
-        //        return Ok(Opdbillpayments);
-        //    }
-        //    else
-        //    {
-        //        List<Opdbillpayment> Opdbillpayments = _context.Opdbillpayments.Include(r => r.Bill).Include(r => r.Paymentmode).ToList();
-        //        return Ok(Opdbillpayments);
-        //    }
-        //}
-
-        // GET: api/Opdbillpayments/5
+     
         [HttpGet("OPDBillpayments/{billid}/{paymentmodeid}/{id}")]
         public async Task<ActionResult<Opdbillpayment>> GetOpdbillpayment(int billid, int paymentmodeid,int id)
         {

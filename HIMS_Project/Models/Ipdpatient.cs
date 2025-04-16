@@ -89,6 +89,9 @@ public partial class Ipdpatient
 
     [InverseProperty("Ipd")]
     public virtual ICollection<Ipdbillpayment> Ipdbillpayments { get; set; } = new List<Ipdbillpayment>();
+   
+    //[InverseProperty("Ipdpatient")]
+    //public virtual IpdBill? IpdBill { get; set; } 
 
     [ForeignKey("Patientid")]
     [InverseProperty("Ipdpatients")]

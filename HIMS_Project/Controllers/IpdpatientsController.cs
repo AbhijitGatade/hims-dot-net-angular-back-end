@@ -49,17 +49,37 @@ namespace HIMS2.Controllers
         }
 
         // GET: api/Ipdpatients/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetIpdpatient(int id)
+        [HttpGet("{ipdid}")]
+        public async Task<IActionResult> GetIpdpatient(int ipdid)
         {
-            var ipdpatient = await _context.Ipdpatients.FindAsync(id);
+                var IpdPatients = await (from ip in _context.Ipdpatients
+                                         join p in _context.Patients on ip.Patientid equals p.Id
+                                         where ip.Id == ipdid
+                                         join d in _context.Doctors on ip.Doctorid equals d.Id
+                                         where ip.Doctorid == d.Id
+                                         join rf in _context.Doctors on ip.Refdoctorid equals rf.Id // Join for the referring doctor
+                                         where ip.Refdoctorid == rf.Id
+                                         join c in _context.Companies on ip.Companyid equals c.Id // Join for the referring doctor
+                                         where ip.Companyid == c.Id
+                                         select new
+                                         {
+                                             Ip = ip,
+                                             PatientName = p.Name,  // Renaming Patient's Name to PatientName
+                                             p.Uidno,
+                                             p.Prefix,
+                                             p.address,
+                                             p.MobileNo,
+                                             CompanyName = c.Name,
+                                             DoctorName = d.Name,  // Renaming Doctor's Name to DoctorName
+                                             DoctorId = d.Id,
+                                             ReferralDoctor = rf.Name,  // Renaming Referring Doctor's Name to ReferringDoctorName
+                                             ReferralDoctorId = rf.Id
+                                         }).FirstOrDefaultAsync();
 
-            if (ipdpatient == null)
-            {
-                return NotFound();
-            }
+                return Ok(IpdPatients);
 
-            return Ok(ipdpatient);
+
+            
         }
 
         // PUT: api/Ipdpatients/5
